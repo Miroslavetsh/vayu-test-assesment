@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 
 import { userRepository } from "../repositories/user.repository";
-import { UserResponse } from "../models/user.model";
+import { UserResponse, PaginatedUsersResponse } from "../models/user.model";
 
 export class UserService {
   private mapUserToResponse(user: User): UserResponse {
@@ -16,6 +16,25 @@ export class UserService {
   async getAll(): Promise<UserResponse[]> {
     const users = await userRepository.findAll();
     return users.map(this.mapUserToResponse);
+  }
+
+  async getAllPaginated(
+    limit: number,
+    offset: number
+  ): Promise<PaginatedUsersResponse> {
+    const [users, total] = await Promise.all([
+      userRepository.findAllPaginated(limit, offset),
+      userRepository.count(),
+    ]);
+
+    return {
+      data: users.map(this.mapUserToResponse),
+      pagination: {
+        limit,
+        offset,
+        total,
+      },
+    };
   }
 }
 
