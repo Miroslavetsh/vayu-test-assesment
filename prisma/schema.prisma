@@ -8,30 +8,30 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  email     String   @unique @db.VarChar(255)
-  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  id        Int         @id @default(autoincrement())
+  name      String      @db.VarChar(255)
+  email     String      @unique @db.VarChar(255)
+  createdAt DateTime?   @default(now()) @map("created_at") @db.Timestamp(0)
   groups    UserGroup[]
 
   @@map("users")
 }
 
 model Group {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  status    String   @db.VarChar(255)
-  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  id        Int         @id @default(autoincrement())
+  name      String      @db.VarChar(255)
+  status    String      @db.VarChar(255)
+  createdAt DateTime?   @default(now()) @map("created_at") @db.Timestamp(0)
   users     UserGroup[]
 
   @@map("groups")
 }
 
 model UserGroup {
-  userId    Int @map("user_id")
-  groupId   Int @map("group_id")
-  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade, map: "user_groups_ibfk_1")
-  group     Group @relation(fields: [groupId], references: [id], onDelete: Cascade, map: "user_groups_ibfk_2")
+  userId  Int   @map("user_id")
+  groupId Int   @map("group_id")
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade, map: "user_groups_ibfk_1")
+  group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade, map: "user_groups_ibfk_2")
 
   @@id([userId, groupId])
   @@index([groupId], map: "group_id")
