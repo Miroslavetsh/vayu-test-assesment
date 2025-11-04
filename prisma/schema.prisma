@@ -3,14 +3,22 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+enum UserStatus {
+  pending
+  active
+  blocked
 }
 
 model User {
   id        Int         @id @default(autoincrement())
   name      String      @db.VarChar(255)
   email     String      @unique @db.VarChar(255)
+  status    UserStatus  @default(pending)
   createdAt DateTime?   @default(now()) @map("created_at") @db.Timestamp(0)
   groups    UserGroup[]
 

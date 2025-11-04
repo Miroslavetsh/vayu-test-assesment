@@ -6,5 +6,6 @@ const router = Router();
 
 router.get("/", paginationMiddleware, userController.getAllPaginated);
 router.delete("/:userId/groups/:groupId", userController.removeFromGroup);
+router.patch("/statuses", userController.updateStatuses);
 
 export default router;

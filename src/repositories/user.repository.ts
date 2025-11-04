@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User, UserStatus } from "@prisma/client";
 import prisma from "@config/prisma";
 
 export class UserRepository {
@@ -78,6 +78,55 @@ export class UserRepository {
           data: { status: emptyStatus },
         });
       }
+    });
+  }
+
+  async batchUpdateStatuses(
+    updates: Array<{ userId: number; status: UserStatus }>
+  ): Promise<{ updated: number; failed: number }> {
+    let updated = 0;
+    let failed = 0;
+
+    const CHUNK_SIZE = 100;
+
+    for (let i = 0; i < updates.length; i += CHUNK_SIZE) {
+      const chunk = updates.slice(i, i + CHUNK_SIZE);
+
+      try {
+        await prisma.$transaction(
+          async (tx) => {
+            for (const { userId, status } of chunk) {
+              const result = await tx.user.updateMany({
+                where: { id: userId },
+                data: { status },
+              });
+
+              if (result.count > 0) {
+                updated++;
+              } else {
+                failed++;
+              }
+            }
+          },
+          {
+            timeout: 30000,
+          }
+        );
+      } catch (error) {
+        failed += chunk.length;
+      }
+    }
+
+    return { updated, failed };
+  }
+
+  async findByIds(ids: number[]): Promise<User[]> {
+    return prisma.user.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
     });
   }
 }
