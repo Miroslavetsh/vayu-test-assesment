@@ -95,21 +95,30 @@ export class UserRepository {
       try {
         await prisma.$transaction(
           async (tx) => {
-            for (const { userId, status } of chunk) {
-              const result = await tx.user.updateMany({
-                where: { id: userId },
-                data: { status },
-              });
+            const updatePromises = chunk.map(async ({ userId, status }) => {
+              try {
+                const result = await tx.user.updateMany({
+                  where: { id: userId },
+                  data: { status },
+                });
+                return { success: result.count > 0 };
+              } catch {
+                return { success: false };
+              }
+            });
 
-              if (result.count > 0) {
+            const results = await Promise.all(updatePromises);
+            results.forEach((result) => {
+              if (result.success) {
                 updated++;
               } else {
                 failed++;
               }
-            }
+            });
           },
           {
             timeout: 30000,
+            maxWait: 10000,
           }
         );
       } catch (error) {

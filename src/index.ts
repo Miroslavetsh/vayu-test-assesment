@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 
 import { testConnection } from "@config/database";
 import routes from "@routes/index";
+import { exceptionFilter } from "@middleware/exceptionFilter.middleware";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", routes);
+app.use(exceptionFilter);
 
 async function startServer() {
   try {

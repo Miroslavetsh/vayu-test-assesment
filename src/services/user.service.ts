@@ -62,23 +62,7 @@ export class UserService {
     failed: number;
     errors: string[];
   }> {
-    const validStatuses = Object.values(UserStatus);
-    const invalidUpdates = updates.filter(
-      (update) => !validStatuses.includes(update.status)
-    );
-
-    if (invalidUpdates.length > 0) {
-      throw new Error(
-        `Invalid status values. Valid statuses: ${validStatuses.join(", ")}`
-      );
-    }
-
     const userIds = updates.map((u) => u.userId);
-    const uniqueUserIds = new Set(userIds);
-    if (userIds.length !== uniqueUserIds.size) {
-      throw new Error("Duplicate user IDs found in the update request");
-    }
-
     const existingUsers = await userRepository.findByIds(userIds);
     const existingUserIds = new Set(existingUsers.map((u) => u.id));
     const missingUserIds = userIds.filter((id) => !existingUserIds.has(id));

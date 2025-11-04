@@ -1001,3 +1001,8 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
+
+zod@^4.1.12:
+  version "4.1.12"
+  resolved "https://registry.npmjs.org/zod/-/zod-4.1.12.tgz"
+  integrity sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==

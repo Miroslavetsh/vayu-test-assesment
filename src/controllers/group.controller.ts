@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { groupService } from "@services/group.service";
-import { sendSuccess, sendError } from "@lib/utils/apiResponse";
+import { sendSuccess } from "@lib/utils/apiResponse";
 import { ApiSuccessResponse } from "@lib/types";
 
 export class GroupController {
@@ -9,11 +9,7 @@ export class GroupController {
       const groups = await groupService.getAll();
       sendSuccess(res, groups);
     } catch (error) {
-      sendError(
-        res,
-        error instanceof Error ? error.message : "Unknown error",
-        500
-      );
+      throw error;
     }
   }
 
@@ -27,11 +23,7 @@ export class GroupController {
       };
       res.status(200).json(response);
     } catch (error) {
-      sendError(
-        res,
-        error instanceof Error ? error.message : "Unknown error",
-        500
-      );
+      throw error;
     }
   }
 }
