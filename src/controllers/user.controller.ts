@@ -34,6 +34,36 @@ export class UserController {
       );
     }
   }
+
+  async removeFromGroup(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = parseInt(req.params.userId);
+      const groupId = parseInt(req.params.groupId);
+
+      if (isNaN(userId) || isNaN(groupId)) {
+        return sendError(res, "Invalid user ID or group ID", 400);
+      }
+
+      await userService.removeFromGroup(userId, groupId);
+      sendSuccess(
+        res,
+        { message: "User removed from group successfully" },
+        200
+      );
+    } catch (error) {
+      const statusCode =
+        error instanceof Error && error.message.includes("not found")
+          ? 404
+          : error instanceof Error && error.message.includes("not a member")
+          ? 400
+          : 500;
+      sendError(
+        res,
+        error instanceof Error ? error.message : "Unknown error",
+        statusCode
+      );
+    }
+  }
 }
 
 export const userController = new UserController();
