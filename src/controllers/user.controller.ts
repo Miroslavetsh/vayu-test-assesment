@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { userService } from "../services/user.service";
-import { parsePaginationParams } from "../lib/utils/parsePaginationParams";
 
 export class UserController {
   async getAll(req: Request, res: Response): Promise<void> {
@@ -20,17 +19,7 @@ export class UserController {
 
   async getAllPaginated(req: Request, res: Response): Promise<void> {
     try {
-      const paginationResult = parsePaginationParams(req);
-
-      if (!paginationResult.isValid) {
-        res.status(400).json({
-          success: false,
-          error: paginationResult.error,
-        });
-        return;
-      }
-
-      const { limit, offset } = paginationResult.params!;
+      const { limit, offset } = res.locals.pagination;
       const result = await userService.getAllPaginated(limit, offset);
       res.status(200).json({
         success: true,
