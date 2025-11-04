@@ -1,19 +1,18 @@
 import { Request, Response } from "express";
 import { healthService } from "../services/health.service";
+import { sendSuccess, sendError } from "../lib/utils/apiResponse";
 
 export class HealthController {
   async getHealth(req: Request, res: Response): Promise<void> {
     try {
       const health = await healthService.getHealth();
-      res.status(200).json({
-        success: true,
-        data: health,
-      });
+      sendSuccess(res, health);
     } catch (error) {
-      res.status(500).json({
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
-      });
+      sendError(
+        res,
+        error instanceof Error ? error.message : "Unknown error",
+        500
+      );
     }
   }
 }

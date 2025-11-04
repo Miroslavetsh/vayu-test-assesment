@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import { groupService } from "../services/group.service";
+import { sendSuccess, sendError } from "../lib/utils/apiResponse";
+import { ApiSuccessResponse } from "../lib/types";
 
 export class GroupController {
   async getAll(req: Request, res: Response): Promise<void> {
     try {
       const groups = await groupService.getAll();
-      res.status(200).json({
-        success: true,
-        data: groups,
-      });
+      sendSuccess(res, groups);
     } catch (error) {
-      res.status(500).json({
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
-      });
+      sendError(
+        res,
+        error instanceof Error ? error.message : "Unknown error",
+        500
+      );
     }
   }
 
@@ -21,15 +21,17 @@ export class GroupController {
     try {
       const { limit, offset } = res.locals.pagination;
       const result = await groupService.getAllPaginated(limit, offset);
-      res.status(200).json({
+      const response: ApiSuccessResponse<typeof result> = {
         success: true,
-        ...result,
-      });
+        data: result,
+      };
+      res.status(200).json(response);
     } catch (error) {
-      res.status(500).json({
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
-      });
+      sendError(
+        res,
+        error instanceof Error ? error.message : "Unknown error",
+        500
+      );
     }
   }
 }

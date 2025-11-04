@@ -1,16 +1,6 @@
 import { Request } from "express";
 import { DEFAULT_LIMIT, DEFAULT_OFFSET } from "../constants";
-
-export interface PaginationParams {
-  limit: number;
-  offset: number;
-}
-
-export interface PaginationValidationResult {
-  isValid: boolean;
-  params?: PaginationParams;
-  error?: string;
-}
+import { PaginationParams, PaginationValidationResult } from "../types";
 
 export function parsePaginationParams(
   req: Request
