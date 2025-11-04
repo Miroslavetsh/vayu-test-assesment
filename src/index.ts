@@ -1,6 +1,8 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
+
 import { testConnection } from "./config/database";
+import routes from "./routes";
 
 dotenv.config();
 
@@ -10,32 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/api/health", async (req: Request, res: Response) => {
-  try {
-    await testConnection();
-    res.json({
-      status: "ok",
-      message: "Server is running, MySQL connected",
-      timestamp: new Date().toISOString(),
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "error",
-      message: "Health check failed",
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-});
-
-app.get("/api", (req: Request, res: Response) => {
-  res.json({
-    message: "Express + TypeScript server is running!",
-    endpoints: {
-      health: "/health",
-      root: "/",
-    },
-  });
-});
+app.use("/api", routes);
 
 async function startServer() {
   try {

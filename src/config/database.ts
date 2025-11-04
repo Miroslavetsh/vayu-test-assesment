@@ -4,9 +4,9 @@ export async function testConnection(): Promise<void> {
   try {
     await prisma.$connect();
     await prisma.$queryRaw`SELECT 1`;
-    console.log("✅ MySQL connected with Prisma!");
+    console.log("✅ MySQL connected!");
   } catch (error) {
-    console.error("❌ MySQL connection error:", error);
+    console.error("❌ MySQL connection failed:", error);
     throw error;
   }
 }
