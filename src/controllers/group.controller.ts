@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { groupService } from "../services/group.service";
-import { sendSuccess, sendError } from "../lib/utils/apiResponse";
-import { ApiSuccessResponse } from "../lib/types";
+import { groupService } from "@services/group.service";
+import { sendSuccess, sendError } from "@lib/utils/apiResponse";
+import { ApiSuccessResponse } from "@lib/types";
 
 export class GroupController {
   async getAll(req: Request, res: Response): Promise<void> {

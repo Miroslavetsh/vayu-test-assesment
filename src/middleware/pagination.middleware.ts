@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from "../lib/constants";
-import { PaginationParams } from "../lib/types";
+import { DEFAULT_LIMIT, DEFAULT_OFFSET } from "@lib/constants";
+import { PaginationParams } from "@lib/types";
 
 export function paginationMiddleware(
   req: Request,

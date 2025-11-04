@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { healthService } from "../services/health.service";
-import { sendSuccess, sendError } from "../lib/utils/apiResponse";
+import { healthService } from "@services/health.service";
+import { sendSuccess, sendError } from "@lib/utils/apiResponse";
 
 export class HealthController {
   async getHealth(req: Request, res: Response): Promise<void> {

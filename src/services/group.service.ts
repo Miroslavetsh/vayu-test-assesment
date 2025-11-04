@@ -1,7 +1,7 @@
 import { Group } from "@prisma/client";
 
-import { groupRepository } from "../repositories/group.repository";
-import { GroupResponse, PaginatedGroupsResponse } from "../models/group.model";
+import { groupRepository } from "@repositories/group.repository";
+import { GroupResponse, PaginatedGroupsResponse } from "@models/group.model";
 
 export class GroupService {
   private mapGroupToResponse(group: Group): GroupResponse {

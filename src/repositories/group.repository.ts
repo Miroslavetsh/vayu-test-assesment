@@ -1,5 +1,5 @@
 import { Group } from "@prisma/client";
-import prisma from "../config/prisma";
+import prisma from "@config/prisma";
 
 export class GroupRepository {
   async findAll(): Promise<Group[]> {

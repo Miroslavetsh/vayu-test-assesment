@@ -1,5 +1,5 @@
-import { HealthResponse } from "../models/health.model";
-import { testConnection } from "../config/database";
+import { HealthResponse } from "@models/health.model";
+import { testConnection } from "@config/database";
 
 class HealthService {
   async getHealth(): Promise<HealthResponse> {

@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 
-import { userRepository } from "../repositories/user.repository";
-import { UserResponse, PaginatedUsersResponse } from "../models/user.model";
+import { userRepository } from "@repositories/user.repository";
+import { UserResponse, PaginatedUsersResponse } from "@models/user.model";
 
 export class UserService {
   private mapUserToResponse(user: User): UserResponse {

@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { ApiSuccessResponse, ApiErrorResponse } from "../types";
+import { ApiSuccessResponse, ApiErrorResponse } from "@lib/types";
 
 export function sendSuccess<T>(
   res: Response,
@@ -24,4 +24,3 @@ export function sendError(
   };
   res.status(statusCode).json(response);
 }
-

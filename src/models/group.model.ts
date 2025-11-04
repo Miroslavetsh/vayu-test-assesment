@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { PaginationResponse } from "./pagination.model";
+import { PaginationResponse } from "@models/pagination.model";
 
 export interface GroupResponse {
   id: number;

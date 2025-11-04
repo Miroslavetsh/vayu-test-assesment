@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { userService } from "../services/user.service";
-import { sendSuccess, sendError } from "../lib/utils/apiResponse";
-import { ApiSuccessResponse } from "../lib/types";
+import { userService } from "@services/user.service";
+import { sendSuccess, sendError } from "@lib/utils/apiResponse";
+import { ApiSuccessResponse } from "@lib/types";
 
 export class UserController {
   async getAll(req: Request, res: Response): Promise<void> {

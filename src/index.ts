@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 
-import { testConnection } from "./config/database";
-import routes from "./routes";
+import { testConnection } from "@config/database";
+import routes from "@routes/index";
 
 dotenv.config();
 
