@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { userService } from "../services/user.service";
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from "../lib/constants";
+import { parsePaginationParams } from "../lib/utils/parsePaginationParams";
 
 export class UserController {
   async getAll(req: Request, res: Response): Promise<void> {
@@ -20,17 +20,17 @@ export class UserController {
 
   async getAllPaginated(req: Request, res: Response): Promise<void> {
     try {
-      const limit = parseInt(req.query.limit as string) || DEFAULT_LIMIT;
-      const offset = parseInt(req.query.offset as string) || DEFAULT_OFFSET;
+      const paginationResult = parsePaginationParams(req);
 
-      if (limit < 1 || offset < 0) {
+      if (!paginationResult.isValid) {
         res.status(400).json({
           success: false,
-          error: "Limit must be greater than 0 and offset must be non-negative",
+          error: paginationResult.error,
         });
         return;
       }
 
+      const { limit, offset } = paginationResult.params!;
       const result = await userService.getAllPaginated(limit, offset);
       res.status(200).json({
         success: true,

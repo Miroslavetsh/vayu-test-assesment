@@ -3,6 +3,6 @@ import { groupController } from "../controllers/group.controller";
 
 const router = Router();
 
-router.get("/", groupController.getAll);
+router.get("/", groupController.getAllPaginated);
 
 export default router;

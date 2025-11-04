@@ -1,10 +1,5 @@
 import { Group } from "@prisma/client";
-
-interface Pagination {
-  limit: number;
-  offset: number;
-  total: number;
-}
+import { PaginationResponse } from "./pagination.model";
 
 export interface UserResponse {
   id: number;
@@ -16,5 +11,5 @@ export interface UserResponse {
 
 export interface PaginatedUsersResponse {
   data: UserResponse[];
-  pagination: Pagination;
+  pagination: PaginationResponse;
 }

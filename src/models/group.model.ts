@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+import { PaginationResponse } from "./pagination.model";
 
 export interface GroupResponse {
   id: number;
@@ -6,4 +7,9 @@ export interface GroupResponse {
   status: string;
   createdAt: Date | null;
   users?: User[];
+}
+
+export interface PaginatedGroupsResponse {
+  data: GroupResponse[];
+  pagination: PaginationResponse;
 }
